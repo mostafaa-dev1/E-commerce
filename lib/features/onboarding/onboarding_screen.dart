@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:newww/components/constance.dart';
+import 'package:newww/core/theming/colors.dart';
 import 'package:newww/features/login_screen/login_screen.dart';
 import 'package:newww/core/network/shared_preferences.dart';
 import 'package:page_transition/page_transition.dart';
@@ -41,17 +42,17 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     {
       'text': 'ONLINE SHOPPE',
       'body': 'Easy and fast shopping form your home',
-      'image': 'lib/assets/images/online.json',
+      'image': 'lib/assets/json/online.json',
     },
     {
       'text': 'ORDER FROM ANY WHERE',
       'body': 'You can order from anywhere',
-      'image': 'lib/assets/images/order.json',
+      'image': 'lib/assets/json/order.json',
     },
     {
       'text': 'DELIVERY',
       'body': 'Delivery to your home',
-      'image': 'lib/assets/images/delivery.json',
+      'image': 'lib/assets/json/delivary.json',
     }
   ];
 
@@ -102,7 +103,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         Text(
                           'Skip',
                           style: TextStyle(
-                            color: color,
+                            color: AppColors.primaryColor,
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
@@ -121,7 +122,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   controller: pageViewController,
                   count: pageViewItems.length,
                   effect: ExpandingDotsEffect(
-                    activeDotColor: color,
+                    activeDotColor: AppColors.primaryColor,
                     dotColor: Colors.grey[300]!,
                     dotHeight: 10,
                     dotWidth: 10,
@@ -150,7 +151,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         Text(
                           'Next',
                           style: TextStyle(
-                            color: color,
+                            color: AppColors.primaryColor,
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),

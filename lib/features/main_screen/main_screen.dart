@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newww/components/constance.dart';
 import 'package:newww/core/logic/home_cubit.dart';
 import 'package:newww/core/logic/home_states.dart';
+import 'package:newww/core/theming/colors.dart';
 
 import '../cart_screen/cart_screen.dart';
 import '../favourites_screen/favourits_screen.dart';
@@ -19,7 +20,7 @@ class _ShopLayoutState extends State<ShopLayout> {
     ProductsScreen(),
     CartScreen(),
     FavouritesScreen(),
-    SettengsScreen()
+    ProfileScreen()
   ];
   int CurrentIndex = 0;
   @override
@@ -31,12 +32,14 @@ class _ShopLayoutState extends State<ShopLayout> {
         return Scaffold(
           body: Screens[CurrentIndex],
           bottomNavigationBar: BottomNavigationBar(
+            unselectedItemColor: Colors.black,
+            unselectedLabelStyle: TextStyle(color: Colors.black, fontSize: 15),
             onTap: (index) {
               setState(() {
                 CurrentIndex = index;
               });
               if (index == 3) {
-                cubit.GetUserData();
+                //cubit.GetUserData();
               }
               if (index == 2) {
                 cubit.GetFavouritesData();
@@ -45,7 +48,7 @@ class _ShopLayoutState extends State<ShopLayout> {
                 cubit.total();
               }
             },
-            selectedItemColor: color,
+            selectedItemColor: AppColors.primaryColor,
             currentIndex: CurrentIndex,
             items: cubit.BottomNavIcons,
           ),

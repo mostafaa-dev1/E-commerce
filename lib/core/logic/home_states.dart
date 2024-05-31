@@ -42,3 +42,5 @@ class GetUserDataLoading extends ShopStates {}
 class NavButtomStates extends ShopStates {}
 
 class TotalPrice extends ShopStates {}
+
+class AddToCart extends ShopStates {}

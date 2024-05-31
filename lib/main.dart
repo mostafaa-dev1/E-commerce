@@ -8,11 +8,13 @@ import 'package:newww/components/constance.dart';
 import 'package:newww/core/network/dio_helper/dio_helper.dart';
 import 'package:newww/core/logic/home_cubit.dart';
 import 'package:newww/core/logic/home_states.dart';
+import 'package:newww/core/theming/colors.dart';
 import 'package:newww/features/main_screen/main_screen.dart';
 import 'package:newww/features/login_screen/login_screen.dart';
 import 'package:newww/core/network/shared_preferences.dart';
 
 import 'package:newww/features/onboarding/onboarding_screen.dart';
+import 'package:newww/success_pay.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -63,77 +65,12 @@ class MyApp extends StatelessWidget {
         builder: (context, state) {
           return MaterialApp(
             theme: ThemeData(
-                colorScheme: ColorScheme.fromSeed(seedColor: color),
+                colorScheme:
+                    ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
                 useMaterial3: true,
-                primarySwatch: Colors.deepPurple,
-                appBarTheme: const AppBarTheme(
-                    surfaceTintColor: Colors.transparent,
-                    titleSpacing: 20,
-                    titleTextStyle: TextStyle(
-                      color: Colors.deepPurpleAccent,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25,
-                    ),
-                    actionsIconTheme: IconThemeData(
-                      color: Colors.black,
-                    ),
-                    backgroundColor: Colors.white,
-                    elevation: 0,
-                    systemOverlayStyle: SystemUiOverlayStyle(
-                      statusBarColor: Colors.white,
-                      statusBarIconBrightness: Brightness.dark,
-                    )),
-                scaffoldBackgroundColor: Colors.white,
-                bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-                  type: BottomNavigationBarType.fixed,
-                  elevation: 10,
-                  backgroundColor: Colors.white,
-                  selectedItemColor: Colors.deepPurpleAccent,
-                  unselectedItemColor: Colors.black,
-                ),
-                textTheme: const TextTheme(
-                    bodyLarge: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
-                ))),
-            darkTheme: ThemeData(
-                primarySwatch: Colors.deepPurple,
-                appBarTheme: AppBarTheme(
-                    titleSpacing: 20,
-                    titleTextStyle: const TextStyle(
-                      color: Colors.deepPurpleAccent,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25,
-                    ),
-                    actionsIconTheme: const IconThemeData(
-                      color: Colors.white,
-                    ),
-                    backgroundColor: HexColor('333739'),
-                    elevation: 0,
-                    systemOverlayStyle: SystemUiOverlayStyle(
-                      statusBarColor: HexColor('333739'),
-                      statusBarIconBrightness: Brightness.light,
-                    )),
-                scaffoldBackgroundColor: HexColor('333739'),
-                bottomNavigationBarTheme: BottomNavigationBarThemeData(
-                    type: BottomNavigationBarType.fixed,
-                    elevation: 10,
-                    backgroundColor: HexColor('333739'),
-                    selectedItemColor: Colors.deepPurpleAccent,
-                    unselectedItemColor: Colors.white,
-                    unselectedLabelStyle: const TextStyle(
-                      color: Colors.white,
-                    )),
-                textTheme: const TextTheme(
-                    bodyLarge: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
-                ))),
-            themeMode: ThemeMode.light,
+                appBarTheme: AppBarTheme(surfaceTintColor: Colors.transparent)),
             debugShowCheckedModeBanner: false,
-            home: startonBoarding,
+            home: OnBoardingScreen(),
           );
         },
       ),

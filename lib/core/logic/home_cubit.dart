@@ -1,15 +1,10 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icon_broken/icon_broken.dart';
-import 'package:newww/features/cart_screen/cart_screen.dart';
-import 'package:newww/features/favourites_screen/favourits_screen.dart';
-import 'package:newww/features/home_screen/home_screen.dart';
-import 'package:newww/features/settings_screen/settings_screen.dart';
-import 'package:newww/categories_model/categories_model.dart';
+import 'package:newww/core/categories_model/categories_model.dart';
 import 'package:newww/components/constance.dart';
 import 'package:newww/core/network/dio_helper/dio_helper.dart';
+import 'package:newww/core/theming/colors.dart';
 import 'package:newww/features/favourites_screen/model/favourites_model.dart';
 import 'package:newww/core/logic/home_states.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +17,7 @@ class ShopCubit extends Cubit<ShopStates> {
   static ShopCubit get(context) => BlocProvider.of(context);
 
   List<BottomNavigationBarItem> BottomNavIcons = [
-    const BottomNavigationBarItem(
+    BottomNavigationBarItem(
       icon: Icon(
         IconBroken.Home,
       ),
@@ -60,7 +55,7 @@ class ShopCubit extends Cubit<ShopStates> {
         favourites.addAll({element.id!: element.inFavourites!});
       });
       data.add(value!.data['data']['products']);
-      //print(value!.data['data']['products']);
+
       emit(GetDataSuccessfuly());
     }).catchError((onError) {
       print(onError.toString());
@@ -110,12 +105,17 @@ class ShopCubit extends Cubit<ShopStates> {
     DioHelper.getData(url: FAVOURITES, token: token).then((value) {
       emit(GetFavouritesItemSuccess());
 
-      // favouritesData.add(value?.data['data']['data'][0]['product']);
+      //favouritesDataModel = FavouritesDataModel.fromJson(value?.data);
+      for (int i = 0; i < value?.data['data']['data'].length; i++) {
+        favouritesData.add(value?.data['data']['data'][i][
+            'product']); //favouritesData.addAll(value?.data['data']['data'][0]['product']);
+      }
+
       // favouritesData.forEach((element) {
       //   print(element);
       // });
 
-      print(value?.data);
+      print(favouritesData[0]['id']);
     }).catchError((onError) {
       print(onError.toString());
       emit(GetFavouritesItemError());
@@ -161,6 +161,27 @@ class ShopCubit extends Cubit<ShopStates> {
 
   List<Map<String, dynamic>> cart = [];
   double? totalPrice = 0;
+  void addToCart(Map<String, dynamic> product) {
+    if (cart.isNotEmpty) {
+      cart.forEach((element) {
+        if (element['id'] == product['id'] && cart.isNotEmpty) {
+          element['quantity']++;
+          element['total'] = element['price'] * element['quantity'];
+          total();
+          emit(AddToCart());
+        } else {
+          cart.add(product);
+          total();
+          emit(AddToCart());
+        }
+      });
+    } else {
+      cart.add(product);
+      total();
+      emit(AddToCart());
+    }
+  }
+
   void total() {
     totalPrice = 0;
     emit(TotalPrice());

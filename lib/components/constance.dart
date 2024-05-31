@@ -41,5 +41,4 @@ void SignOut(context) {
   });
 }
 
-Color color = HexColor('3863FF');
 String token = '';

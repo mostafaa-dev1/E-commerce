@@ -1,16 +1,13 @@
-
 class SearchModel {
   bool? status;
   String? message;
   Data? data;
-
 
   SearchModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
     data = json['data'] != null ? new Data.fromJson(json['data']) : null;
   }
-
 }
 
 class Data {
@@ -29,17 +26,17 @@ class Data {
 
   Data(
       {this.currentPage,
-        this.data,
-        this.firstPageUrl,
-        this.from,
-        this.lastPage,
-        this.lastPageUrl,
-        this.nextPageUrl,
-        this.path,
-        this.perPage,
-        this.prevPageUrl,
-        this.to,
-        this.total});
+      this.data,
+      this.firstPageUrl,
+      this.from,
+      this.lastPage,
+      this.lastPageUrl,
+      this.nextPageUrl,
+      this.path,
+      this.perPage,
+      this.prevPageUrl,
+      this.to,
+      this.total});
 
   Data.fromJson(Map<String, dynamic> json) {
     currentPage = json['current_page'];
@@ -60,32 +57,29 @@ class Data {
     to = json['to'];
     total = json['total'];
   }
-
 }
 
 class Product {
   int? id;
   dynamic price;
   dynamic oldPrice;
-  dynamic discount;
   String? image;
   String? name;
   String? description;
 
   Product(
       {this.id,
-        this.price,
-        this.oldPrice,
-        this.discount,
-        this.image,
-        this.name,
-        this.description});
+      this.price,
+      this.oldPrice,
+      this.image,
+      this.name,
+      this.description});
 
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     price = json['price'];
     oldPrice = json['old_price'];
-    discount = json['discount'];
+
     image = json['image'];
     name = json['name'];
     description = json['description'];

@@ -1,29 +1,25 @@
-class FavouritesModel{
-  bool? status ;
+class FavouritesModel {
+  bool? status;
   String? message;
-  FavouritesModel.fromJson(Map<String,dynamic>json){
+  FavouritesModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
   }
 }
-
-
 
 class FavouritesDataModel {
   bool? status;
   Null? message;
   Data? data;
 
-
   FavouritesDataModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
     data = json['data'] != null ? new Data.fromJson(json['data']) : null;
   }
-
 }
 
- class Data {
+class Data {
   int? currentPage;
   List<DataFavModel>? data;
   String? firstPageUrl;
@@ -39,17 +35,17 @@ class FavouritesDataModel {
 
   Data(
       {this.currentPage,
-        this.data,
-        this.firstPageUrl,
-        this.from,
-        this.lastPage,
-        this.lastPageUrl,
-        this.nextPageUrl,
-        this.path,
-        this.perPage,
-        this.prevPageUrl,
-        this.to,
-        this.total});
+      this.data,
+      this.firstPageUrl,
+      this.from,
+      this.lastPage,
+      this.lastPageUrl,
+      this.nextPageUrl,
+      this.path,
+      this.perPage,
+      this.prevPageUrl,
+      this.to,
+      this.total});
 
   Data.fromJson(Map<String, dynamic> json) {
     currentPage = json['current_page'];
@@ -70,7 +66,6 @@ class FavouritesDataModel {
     to = json['to'];
     total = json['total'];
   }
-
 }
 
 class DataFavModel {
@@ -79,10 +74,10 @@ class DataFavModel {
 
   DataFavModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    productfav =
-    json['product'] != null ? new ProductFav.fromJson(json['product']) : null;
+    productfav = json['product'] != null
+        ? new ProductFav.fromJson(json['product'])
+        : null;
   }
-
 }
 
 class ProductFav {
@@ -96,12 +91,12 @@ class ProductFav {
 
   ProductFav(
       {this.id,
-        this.price,
-        this.oldPrice,
-        this.discount,
-        this.image,
-        this.name,
-        this.description});
+      this.price,
+      this.oldPrice,
+      this.discount,
+      this.image,
+      this.name,
+      this.description});
 
   ProductFav.fromJson(Map<String, dynamic> json) {
     id = json['id'];

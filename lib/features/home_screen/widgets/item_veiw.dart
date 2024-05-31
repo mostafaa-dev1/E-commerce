@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:newww/components/constance.dart';
 import 'package:newww/core/logic/home_cubit.dart';
+import 'package:newww/core/theming/colors.dart';
+import 'package:newww/core/theming/fonts.dart';
 import 'package:stepper_counter_swipe/stepper_counter_swipe.dart';
 
 class ViewItem extends StatefulWidget {
@@ -14,6 +16,7 @@ class ViewItem extends StatefulWidget {
     required this.description,
     required this.discount,
     this.oldPrice,
+    required this.id,
   });
   final String image;
   final String text;
@@ -21,6 +24,7 @@ class ViewItem extends StatefulWidget {
   final String description;
   final dynamic discount;
   final dynamic oldPrice;
+  final int id;
 
   @override
   State<ViewItem> createState() => _ViewItemState();
@@ -41,7 +45,7 @@ class _ViewItemState extends State<ViewItem> {
             flexibleSpace: FlexibleSpaceBar(
               background: Image.network(
                 widget.image,
-                fit: BoxFit.fill,
+                fit: BoxFit.scaleDown,
               ),
             ),
             actions: [
@@ -60,7 +64,7 @@ class _ViewItemState extends State<ViewItem> {
                             spreadRadius: 1,
                           )
                         ]),
-                    child: Center(
+                    child: const Center(
                       child: Icon(CupertinoIcons.heart),
                     )),
               ),
@@ -84,7 +88,7 @@ class _ViewItemState extends State<ViewItem> {
                           spreadRadius: 1,
                         )
                       ]),
-                  child: Center(
+                  child: const Center(
                     child: Icon(
                       Icons.arrow_back_ios,
                     ),
@@ -101,11 +105,7 @@ class _ViewItemState extends State<ViewItem> {
                 children: [
                   Row(
                     children: [
-                      Text('\$${widget.price * quantity}',
-                          style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'font')),
+                      Text('\$${widget.price}', style: AppFonts.style20B),
                       widget.discount != 0
                           ? Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -120,16 +120,14 @@ class _ViewItemState extends State<ViewItem> {
                             )
                           : Container(),
                       const Spacer(),
-                      const Row(
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
                             Icons.star,
                             color: Colors.orangeAccent,
                           ),
-                          Text('4.5',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16)),
+                          Text('4.5', style: AppFonts.style16)
                         ],
                       )
                     ],
@@ -137,40 +135,54 @@ class _ViewItemState extends State<ViewItem> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Text(widget.text,
-                      style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'font')),
+                  Text(widget.text, style: AppFonts.style20w600),
                   const SizedBox(
                     height: 20,
                   ),
-                  Container(
-                    height: 50,
-                    decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(20)),
-                    child: StepperSwipe(
-                      initialValue: quantity,
-                      iconsColor: color,
+                  Row(
+                    children: [
+                      Container(
+                        height: 45,
+                        decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(20)),
+                        child: StepperSwipe(
+                          initialValue: quantity,
+                          iconsColor: AppColors.primaryColor,
 
-                      speedTransitionLimitCount:
-                          3, //Trigger count for fast counting
-                      onChanged: (int value) {
-                        setState(() {
-                          quantity = value;
-                        });
-                      },
-                      firstIncrementDuration: const Duration(
-                          milliseconds: 250), //Unit time before fast counting
-                      secondIncrementDuration: const Duration(
-                          milliseconds: 100), //Unit time during fast counting
-                      direction: Axis.horizontal,
-                      dragButtonColor: color,
-                      maxValue: 10,
-                      minValue: 1,
-                      stepperValue: quantity,
-                    ),
+                          speedTransitionLimitCount:
+                              3, //Trigger count for fast counting
+                          onChanged: (int value) {
+                            setState(() {
+                              quantity = value;
+                            });
+                          },
+                          firstIncrementDuration: const Duration(
+                              milliseconds:
+                                  250), //Unit time before fast counting
+                          secondIncrementDuration: const Duration(
+                              milliseconds:
+                                  100), //Unit time during fast counting
+                          direction: Axis.horizontal,
+                          dragButtonColor: AppColors.primaryColor,
+                          maxValue: 10,
+                          minValue: 1,
+                          stepperValue: quantity,
+                        ),
+                      ),
+                      Spacer(),
+                      Text.rich(TextSpan(
+                        children: [
+                          TextSpan(
+                              text: 'Total : ',
+                              style: AppFonts.style20
+                                  .copyWith(fontWeight: FontWeight.bold)),
+                          TextSpan(
+                              text: '\$${quantity * widget.price}',
+                              style: AppFonts.style18),
+                        ],
+                      ))
+                    ],
                   ),
                   const SizedBox(
                     height: 20,
@@ -178,6 +190,7 @@ class _ViewItemState extends State<ViewItem> {
                   GestureDetector(
                     onTap: () {
                       ShopCubit.get(context).cart.add({
+                        'id': widget.id,
                         'name': widget.text,
                         'price': widget.price,
                         'image': widget.image,
@@ -189,14 +202,14 @@ class _ViewItemState extends State<ViewItem> {
                       print(ShopCubit.get(context).cart);
                       showToast('Added to cart',
                           context: context,
-                          backgroundColor: color,
+                          backgroundColor: AppColors.primaryColor,
                           position: StyledToastPosition.bottom,
                           animation: StyledToastAnimation.slideToTop);
                     },
                     child: Container(
                         height: 50,
                         decoration: BoxDecoration(
-                            color: color,
+                            color: AppColors.primaryColor,
                             borderRadius: BorderRadius.circular(20)),
                         child: const Center(
                             child: Text('Add to cart',
@@ -212,32 +225,25 @@ class _ViewItemState extends State<ViewItem> {
                       height: 50,
                       decoration: BoxDecoration(
                           color: Colors.white,
-                          border: Border.all(color: color),
+                          border: Border.all(color: AppColors.primaryColor),
                           borderRadius: BorderRadius.circular(20)),
                       child: Center(
                           child: Text('Buy Now',
                               style: TextStyle(
-                                  color: color,
+                                  color: AppColors.primaryColor,
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold)))),
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text('Details',
-                      style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'font')),
+                  Text('Details', style: AppFonts.style20B),
                   const SizedBox(
                     height: 5,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(widget.description,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        )),
+                    child:
+                        Text(widget.description, style: AppFonts.style16w500),
                   )
                 ],
               ),

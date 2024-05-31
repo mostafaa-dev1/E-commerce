@@ -1,16 +1,16 @@
 class shopLoginModel {
-   late bool status;
-   String? message;
-   UserData? data;
+  late bool status;
+  String? message;
+  UserData? data;
 
-   shopLoginModel.fromjson(Map<String,dynamic> json){
-     status = json['status'];
-     message = json['message'];
-     data = json['data'] != null ? UserData.fromjson (json['data']) : null;
-   }
-
+  shopLoginModel.fromjson(Map<String, dynamic> json) {
+    status = json['status'];
+    message = json['message'];
+    data = json['data'] != null ? UserData.fromjson(json['data']) : null;
+  }
 }
-class UserData{
+
+class UserData {
   int? id;
   String? name;
   String? email;
@@ -33,7 +33,7 @@ class UserData{
 //     this.token,
 // });
 
-  UserData.fromjson(Map<String,dynamic> json){
+  UserData.fromjson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     email = json['email'];
@@ -43,6 +43,5 @@ class UserData{
     points = json['points'];
     credit = json['credit'];
     token = json['token'];
-
   }
 }

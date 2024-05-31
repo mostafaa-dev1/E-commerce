@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:newww/features/login_screen/logic/states.dart';
 import 'package:newww/core/network/dio_helper/dio_helper.dart';
 import 'package:newww/core/network/end_point.dart';
 import 'package:newww/features/register_screen/logic/register_states.dart';
@@ -10,7 +9,9 @@ import 'package:newww/user_model/user_model.dart';
 
 class ShopRegisterCubit extends Cubit<ShopRegisterSates> {
   ShopRegisterCubit() : super(RegisterInitialstate());
+
   static ShopRegisterCubit get(context) => BlocProvider.of(context);
+
   shopLoginModel? loginModel;
 
   void userRegister({
